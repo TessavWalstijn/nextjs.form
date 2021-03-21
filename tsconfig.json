@@ -21,7 +21,8 @@
     "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
-      "@react/*": ["./react/*"]
+      "@react/*": ["./react/*"],
+      "@utils/*": ["./utils/*"]
     }
   },
   "exclude": ["node_modules"],
