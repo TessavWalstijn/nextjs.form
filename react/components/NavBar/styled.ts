@@ -15,31 +15,6 @@ export const Nav = styled.nav<StyledProps>`
   padding: 10px 0px;
   left: 0px;
   width: 100%;
-  z-index: 10;
-
-  ::before {
-    content: '';
-    position: fixed;
-    bottom: 55px;
-    width: 0px;
-    height: 0px;
-    border-left: solid 8px transparent;
-    border-right: solid 8px transparent;
-    border-top: solid 8px ${(props) => props.theme.colors.highlight};
-    z-index: 11;
-  }
-
-  ::after {
-    content: '';
-    position: fixed;
-    bottom: 56px;
-    width: 0px;
-    height: 0px;
-    border-left: solid 7px transparent;
-    border-right: solid 7px transparent;
-    border-top: solid 7px ${(props) => props.theme.colors.lowlight};
-    z-index: 12;
-  }
 
   @media (min-width: 50rem) {
     bottom: unset;
@@ -48,14 +23,6 @@ export const Nav = styled.nav<StyledProps>`
     width: unset;
     border-top: unset;
     padding: 0;
-
-    ::before {
-      border-top: solid 7px transparent;
-    }
-
-    ::after {
-      border-top: solid 8px transparent;
-    }
   }
 
   ${typography}

@@ -7,6 +7,7 @@ import H from '@react/components/Typography/Header'
 import P from '@react/components/Typography/Paragraph'
 import Container from '@react/components/Container'
 import NavBar from '@react/components/NavBar'
+import Form from '@react/components/Form'
 
 const Home = (data: any) => {
 
@@ -48,6 +49,7 @@ const Home = (data: any) => {
           ]} />
           <H variant="h1">{data.title}</H>
           <P>{data.text}</P>
+          <Form />
         </Container>
       </ThemeProvider>
     </>
