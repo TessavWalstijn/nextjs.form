@@ -19,12 +19,13 @@ const feedback = variant({
 })
 
 export const InputStyled: StyledComponent<
-  ForwardRefComponent<HTMLInputElement, HTMLMotionProps<"input">>,
+  ForwardRefComponent<HTMLInputElement, HTMLMotionProps<'input'>>,
   DefaultTheme,
   { feedback: string } & StyledProps,
   never
 > = styled(motion.input)`
   border-radius: 1rem;
+  width: 100%;
   height: 1.6rem;
   margin: 0.2rem;
   padding: 0.2rem 0.5rem;
@@ -54,3 +55,14 @@ export const Warn = styled(P)`
   margin-left: 1rem;
   font-weight: 300;
 ` 
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  ${feedback}
+  ${typography}
+  ${space}
+  ${color}
+  ${layout}
+`

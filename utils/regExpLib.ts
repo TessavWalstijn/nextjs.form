@@ -7,8 +7,8 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static checkEmail(email: string) {
-      // NOTE: Simple RegEx test to check if it as first an @ and then a dot
-      return /(^\S+([@])\S+([.])\w+$)/g.test(email);
+    // NOTE: Simple RegEx test to check if it as first an @ and then a dot
+    return /(^\S+([@])\S+([.])\w+$)/g.test(email)
   }
 
   /**
@@ -20,7 +20,7 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static checkCharsOnly(value: string) {
-      return /(^[A-Za-z]+$)/g.test(value);
+    return /(^[A-Za-z]+$)/g.test(value)
   }
 
   /**
@@ -32,7 +32,19 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static checkName(value: string) {
-      return /(^[A-Za-z ]+$)/g.test(value);
+    return /(^[A-Za-z ]+$)/g.test(value)
+  }
+
+    /**
+   * Matches any characters in the range "A" to "Z" single letters seperated by "dots"
+   * (char code  	46, 65 to 90).
+   * Match has to be from the beginning of the string to the end.
+   * NOTE: Case sensitive.
+   * @param   {string}  value The value you want to check against.
+   * @returns {boolean}       Returns true if a match has been found.
+   */
+  public static checkInitials(value: string) {
+    return /(^([A-Z]\.)+$)/g.test(value)
   }
 
   /**
@@ -42,7 +54,7 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static checkDay(value: string) {
-      return /^(0?[1-9]|[12][0-9]|3[01])$/g.test(value);
+    return /^(0?[1-9]|[12][0-9]|3[01])$/g.test(value)
   }
 
   /**
@@ -52,7 +64,7 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static checkMonth(value: string) {
-      return /^(0?[1-9]|1[0-2])$/g.test(value);
+    return /^(0?[1-9]|1[0-2])$/g.test(value)
   }
   // #endregion
 
@@ -64,7 +76,7 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static containsUpperCase(value: string) {
-      return /([A-Z]+)/g.test(value);
+    return /([A-Z]+)/g.test(value)
   }
 
   /**
@@ -74,7 +86,7 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static containsLowerCase(value: string) {
-      return /([a-z]+)/g.test(value);
+    return /([a-z]+)/g.test(value)
   }
 
   /**
@@ -85,7 +97,7 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static containsChars(value: string) {
-      return /([A-Za-z])/g.test(value);
+    return /([A-Za-z])/g.test(value)
   }
 
   /**
@@ -95,7 +107,7 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static containsNumbers(value: string) {
-      return /(\d+)/g.test(value);
+    return /(\d+)/g.test(value)
   }
 
   /**
@@ -105,9 +117,9 @@ class RegExpLib {
    * @returns {boolean}       Returns true if a match has been found.
    */
   public static containsOtherChars(value: string) {
-      return /(\W+)/g.test(value);
+    return /(\W+)/g.test(value)
   }
   // #endregion
 }
 
-export default RegExpLib;
+export default RegExpLib
