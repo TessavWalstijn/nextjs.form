@@ -22,10 +22,11 @@ interface Props extends StyledProps {
   error?: string
   require?: string | boolean
   placeholder: string
+  readonly?: boolean
 }
 
 const Input: React.FC<Props> = forwardRef(
-  ({ onCheck, error, warn, require, placeholder, ...other }, ref: any) => {
+  ({ onCheck, error, warn, require, placeholder, readonly = false, ...other }, ref: any) => {
     const [feedback, setFeedback] = useState<Feedback>(Feedback.regular)
 
     const handleKeyUp = debounce(() => {
@@ -40,6 +41,8 @@ const Input: React.FC<Props> = forwardRef(
       onCheck(input.value, setFeedback)
     }, 300)
 
+    console.log(readonly)
+
     return <Container {...other}>
       <InputStyled
         ref={ref}
@@ -48,6 +51,7 @@ const Input: React.FC<Props> = forwardRef(
         feedback={feedback}
         fontSize={0}
         type='text'
+        readonly={readonly}
       />
       {feedback === 'warning' && <Warn>{warn}</Warn>}
       {feedback === 'error' && <Error>{error}</Error>}

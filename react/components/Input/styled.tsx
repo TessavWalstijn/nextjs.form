@@ -19,7 +19,7 @@ const feedback = variant({
 })
 
 export const InputStyled: StyledComponent<
-  ForwardRefComponent<HTMLInputElement, HTMLMotionProps<"input">>,
+  ForwardRefComponent<HTMLInputElement, HTMLMotionProps<'input'>>,
   DefaultTheme,
   { feedback: string } & StyledProps,
   never
