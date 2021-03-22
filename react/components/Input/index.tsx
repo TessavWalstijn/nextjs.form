@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useState, useRef } from 'react'
 import {
   InputStyled,
   Warn,
@@ -6,7 +6,8 @@ import {
   Container
 } from './styled'
 import StyledProps from '@react/props/StyledProps'
-import debounce from '@utils/debounce';
+import debounce from '@utils/debounce'
+import mergeRefs from '@utils/mergeRefs'
 
 export enum Feedback {
   regular = 'regular',
@@ -28,9 +29,15 @@ interface Props extends StyledProps {
 const Input: React.FC<Props> = forwardRef(
   ({ onCheck, error, warn, require, placeholder, readonly = false, ...other }, ref: any) => {
     const [feedback, setFeedback] = useState<Feedback>(Feedback.regular)
+    const inputRef = useRef<HTMLInputElement | null>(null)
 
     const handleKeyUp = debounce(() => {
-      const input = ref.current
+      let input
+      if (ref) {
+        input = ref.current
+      } else if (inputRef) {
+        input = inputRef.current
+      }
 
       if (!input) return
 
@@ -41,11 +48,9 @@ const Input: React.FC<Props> = forwardRef(
       onCheck(input.value, setFeedback)
     }, 300)
 
-    console.log(readonly)
-
     return <Container {...other}>
       <InputStyled
-        ref={ref}
+        ref={mergeRefs(inputRef, ref)}
         placeholder={placeholder}
         onKeyUp={handleKeyUp}
         feedback={feedback}

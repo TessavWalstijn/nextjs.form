@@ -8,16 +8,17 @@ interface ThemeButtonProps {
   themed: DefaultTheme,
   icon: IconName,
   text: string,
-  link: string
+  link: string,
+  onlySolid?: bool,
 }
 
-const ThemeButton: React.FC<ThemeButtonProps> = ({ themed, icon, link, text, ...other }) => {
+const MainButton: React.FC<ThemeButtonProps> = ({ themed, icon, link, text, onlySolid = false, ...other }) => {
 
   return (
     <Button {...other}>
       <Link href={link}>
         <AA>
-          <Icon style={{ cursor: 'pointer' }} icon={[themed.type === 'light' ? 'far' : 'fas', icon]} />
+          <Icon style={{ cursor: 'pointer' }} icon={[onlySolid === true ? 'fas' : (themed.type === 'light' ? 'far' : 'fas'), icon]} />
           <Text>
             <P>
               {text}
@@ -29,4 +30,4 @@ const ThemeButton: React.FC<ThemeButtonProps> = ({ themed, icon, link, text, ...
   )
 }
 
-export default ThemeButton
+export default MainButton

@@ -3,19 +3,18 @@ import { useEffect, useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 import Head from 'next/head'
 import { main, light } from '@react/themes'
-import H from '@react/components/Typography/Header'
-import P from '@react/components/Typography/Paragraph'
 import Container from '@react/components/Container'
 import NavBar from '@react/components/NavBar'
-import Form from '@react/components/Form'
+import StyledMarkdown from '@react/components/StyledMarkdown'
 import MainButton from '@react/components/Buttons/MainButton/index'
+import fs from 'fs'
+import path from 'path'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faInfoCircle);
+library.add(faHome);
 
-const Home = (data: any) => {
-
+const About = (data: any) => {
   const [currentTheme, setCurrentTheme] = useState(main)
 
   const handleTheme = (theme: 'dark' | 'light') => {
@@ -49,12 +48,10 @@ const Home = (data: any) => {
       </Head>
       <ThemeProvider theme={currentTheme}>
         <NavBar handleTheme={handleTheme} themed={currentTheme} buttons={[
-          <MainButton link='./about' icon='info-circle' themed={currentTheme} text='About' onlySolid />
+          <MainButton link='./' icon='home' themed={currentTheme} text='Home' onlySolid />
         ]} />
-        <Container>
-          <H variant="h1">{data.title}</H>
-          <P>{data.text}</P>
-          <Form />
+        <Container pb={65}>
+          <StyledMarkdown text={data.markdown} />
         </Container>
       </ThemeProvider>
     </>
@@ -62,17 +59,22 @@ const Home = (data: any) => {
 }
 
 export async function getStaticProps() {
+  let data = new Promise((res) => {
+    fs.readFile(path.resolve(__dirname, '../../../README.md'), { encoding: 'utf-8' }, (error, markdown) => {
+      if (error) return res({
+        markdown: error
+      })
 
-  // Dummy data
-  const page = {
-    title: "App",
-    text: "Awesome app text here"
-  }
+      res({
+        markdown
+      })
+    });
+  })
 
   return {
-    props: page,
+    props: await data,
     revalidate: 1200,
   }
 }
 
-export default Home;
+export default About;

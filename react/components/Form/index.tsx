@@ -86,6 +86,7 @@ const Form: React.FC<StyledProps> = () => {
   return <>
     <Row>
       <Input
+        ref={null}
         onCheck={checkInitials}
         warn="Invalid initials"
         require="Sorry but initial(s) is/are required"
@@ -93,12 +94,14 @@ const Form: React.FC<StyledProps> = () => {
         width={'15%'}
       />
       <Input
+        ref={null}
         onCheck={checkName}
         warn="Invalid insertion"
         placeholder="Insertion"
         width={'30%'}
       />
       <Input
+        ref={null}
         onCheck={checkName}
         warn="Invalid last name"
         require="Sorry but initial(s) is/are required"
