@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { forwardRef, useState } from 'react'
 import {
   InputStyled,
   Warn,
   Error,
+  Container
 } from './styled'
 import StyledProps from '@react/props/StyledProps'
 import debounce from '@utils/debounce';
@@ -15,31 +16,44 @@ export enum Feedback {
 }
 
 interface Props extends StyledProps {
-  onCheck: (value: string, setFeedback: any) => void
-  error: string
+  onCheck: (value: string, setFeedback: any) => void,
   warn: string
-  require: string | boolean
+  ref?: any,
+  error?: string
+  require?: string | boolean
   placeholder: string
 }
 
-const Input: React.FC<Props> = ({onCheck, error, warn, require, placeholder, ...other }) => {
-  const [feedback, setFeedback] = useState<Feedback>(Feedback.regular)
-  const inputRef = useRef<HTMLInputElement | null>(null)
+const Input: React.FC<Props> = forwardRef(
+  ({ onCheck, error, warn, require, placeholder, ...other }, ref: any) => {
+    const [feedback, setFeedback] = useState<Feedback>(Feedback.regular)
 
-  const handleKeyUp = debounce(() => {
-    const input = inputRef.current
+    const handleKeyUp = debounce(() => {
+      const input = ref.current
 
-    if (!input) return
+      if (!input) return
 
-    onCheck(input.value, setFeedback)
-  }, 300)
+      if (require && input.value === '' && feedback !== Feedback.required) {
+        return setFeedback(Feedback.required)
+      }
 
-  return <>
-    <InputStyled ref={inputRef} placeholder={placeholder} onKeyUp={handleKeyUp} feedback={feedback} fontSize={0} type='text' {...other} />
-    { feedback === 'warning' && <Warn>{warn}</Warn> }
-    { feedback === 'error' && <Error>{error}</Error> }
-    { feedback === 'required' && require && <Error>{require}</Error> }
-  </>
-}
+      onCheck(input.value, setFeedback)
+    }, 300)
+
+    return <Container {...other}>
+      <InputStyled
+        ref={ref}
+        placeholder={placeholder}
+        onKeyUp={handleKeyUp}
+        feedback={feedback}
+        fontSize={0}
+        type='text'
+      />
+      {feedback === 'warning' && <Warn>{warn}</Warn>}
+      {feedback === 'error' && <Error>{error}</Error>}
+      {feedback === 'required' && require && <Error>{require}</Error>}
+    </Container>
+  }
+)
 
 export default Input;

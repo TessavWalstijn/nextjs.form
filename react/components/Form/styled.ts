@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { space, color, typography, layout } from 'styled-system'
 
-export const FullName = styled.div`
+export const Row = styled.div`
   display: flex;
   justify-content: space-between;
 
