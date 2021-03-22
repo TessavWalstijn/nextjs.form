@@ -8,13 +8,20 @@ const Form: React.FC<StyledProps> = () => {
   const houseNumberRef = useRef<HTMLInputElement | null>(null)
   const postalcodeRef = useRef<HTMLInputElement | null>(null)
 
-  const checkApi = () => {
+  const checkApi = async () => {
     const houseNumber = houseNumberRef.current
     const postalcode = postalcodeRef.current
 
     if (!(houseNumber && postalcode)) return
 
-    console.log(postalcode.value, houseNumber.value)
+    const postcode = postalcode.value.replace(/[ ]/g, '');
+    const housenum = houseNumber.value.replace(/[ ]/g, '');
+
+    const res = await fetch(`https://photon.komoot.io/api?q=${postcode}%20${housenum}`)
+    const location = await res.json();
+
+    // API output
+    console.log(location.features[0])
   }
 
   const checkEmail = (value: string, setFeedback: any) => {
