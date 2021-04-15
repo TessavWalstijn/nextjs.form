@@ -1,8 +1,6 @@
-import cookie from 'js-cookie'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { ThemeProvider } from 'styled-components'
 import Head from 'next/head'
-import { main, light } from '@react/themes'
 import Container from '@react/components/Container'
 import NavBar from '@react/components/NavBar'
 import StyledMarkdown from '@react/components/StyledMarkdown'
@@ -11,35 +9,15 @@ import fs from 'fs'
 import path from 'path'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
+import getThemeFromCookie from '@utils/getThemeFromCookie'
 
 library.add(faHome);
 
 const About = (data: any) => {
-  const [currentTheme, setCurrentTheme] = useState(main)
+  const { currentTheme, handleTheme } = data;
+  const updateThemeCookie = getThemeFromCookie(handleTheme);
 
-  const handleTheme = (theme: 'dark' | 'light') => {
-    cookie.set('nextjs-form-theme', theme, { SameSite: "Strict" })
-    switch (theme) {
-      case 'dark':
-        setCurrentTheme(main)
-        break;
-      case 'light':
-        setCurrentTheme(light)
-        break;
-    }
-  }
-
-  useEffect(() => {
-    if (process.browser) {
-      const theme: string | undefined = cookie.get('nextjs-form-theme')
-
-      if (theme === 'light' || theme === 'dark') {
-        handleTheme(theme);
-      } else {
-        cookie.set('nextjs-form-theme', 'dark')
-      }
-    }
-  }, [currentTheme])
+  useEffect(updateThemeCookie, [currentTheme])
 
   return (
     <>
